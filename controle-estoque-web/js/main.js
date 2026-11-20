@@ -174,11 +174,20 @@ function excluirItem(id) {
 form.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
+  const quantidade = Number(inputQuantidade.value);
+  const minimo = Number(inputMinimo.value);
+
+  if (!Number.isSafeInteger(quantidade) || quantidade < 0 ||
+      !Number.isSafeInteger(minimo) || minimo < 0) {
+    alert("Informe quantidades inteiras e iguais ou maiores que zero.");
+    return;
+  }
+
   const dados = {
     nome: inputNome.value.trim(),
     categoria: inputCategoria.value,
-    quantidade: Math.max(0, parseInt(inputQuantidade.value, 10) || 0),
-    minimo: Math.max(0, parseInt(inputMinimo.value, 10) || 0),
+    quantidade,
+    minimo,
     unidade: inputUnidade.value.trim() || "un",
     observacao: inputObs.value.trim(),
     atualizadoEm: new Date().toLocaleDateString("pt-BR")
