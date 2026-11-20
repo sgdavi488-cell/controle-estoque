@@ -1,5 +1,8 @@
 function escaparCampoCsv(valor) {
-  const texto = String(valor ?? "").replace(/"/g, '""');
+  const original = String(valor ?? "");
+  // Evita que planilhas interpretem texto iniciado por caracteres de fórmula.
+  const protegido = /^[\\s]*[=+@\\-]/.test(original) ? "'" + original : original;
+  const texto = protegido.replace(/"/g, '""');
   return `"${texto}"`;
 }
 
