@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Estoque Web</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo-conteudo">
+      <div>
+        <h1>Controle de Estoque</h1>
+        <p class="subtitulo">Gestão simples de materiais de escritório e reposição</p>
+      </div>
+      <div class="acoes-topo">
+        <button type="button" id="btn-exemplo" class="btn btn-secundario">Carregar exemplos</button>
+        <button type="button" id="btn-exportar" class="btn btn-primario">Exportar CSV (Excel)</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="resumo" aria-label="Indicadores de estoque">
+      <div class="card-resumo">
+        <span class="card-label">Itens cadastrados</span>
+        <strong id="stat-itens">0</strong>
+      </div>
+      <div class="card-resumo">
+        <span class="card-label">Unidades no estoque</span>
+        <strong id="stat-unidades">0</strong>
+      </div>
+      <div class="card-resumo card-alerta">
+        <span class="card-label">Abaixo do mínimo</span>
+        <strong id="stat-baixo">0</strong>
+      </div>
+    </section>
+
+    <section class="painel">
+      <h2 id="titulo-form">Cadastrar item</h2>
+      <form id="form-item" class="grid-form">
+        <input type="hidden" id="item-id">
+
+        <div class="campo">
+          <label for="nome">Nome do material</label>
+          <input type="text" id="nome" placeholder="Ex: Papel Sulfite A4" required>
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" required>
+            <option value="Papelaria">Papelaria</option>
+            <option value="Informática">Informática</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Copa">Copa</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="quantidade">Quantidade atual</label>
+          <input type="number" id="quantidade" min="0" value="0" required>
+        </div>
+
+        <div class="campo">
+          <label for="minimo">Estoque mínimo</label>
+          <input type="number" id="minimo" min="0" value="5" required>
+        </div>
+
+        <div class="campo">
+          <label for="unidade">Unidade</label>
+          <input type="text" id="unidade" placeholder="un, cx, pct, resma" value="un" required>
+        </div>
+
+        <div class="campo campo-obs">
+          <label for="observacao">Observação (opcional)</label>
+          <input type="text" id="observacao" placeholder="Ex: Fornecedor padrão ou local de guarda">
+        </div>
+
+        <div class="acoes-form">
+          <button type="submit" id="btn-salvar" class="btn btn-primario">Salvar item</button>
+          <button type="button" id="btn-cancelar" class="btn btn-secundario oculto">Cancelar edição</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="painel">
+      <div class="barra-filtros">
+        <input type="search" id="busca" placeholder="Buscar por nome ou observação...">
+
+        <select id="filtro-categoria" aria-label="Filtrar por categoria">
+          <option value="todas">Todas as categorias</option>
+          <option value="Papelaria">Papelaria</option>
+          <option value="Informática">Informática</option>
+          <option value="Limpeza">Limpeza</option>
+          <option value="Copa">Copa</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <label class="check-filtro">
+          <input type="checkbox" id="filtro-baixo">
+          Apenas estoque baixo
+        </label>
+      </div>
+
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Material</th>
+              <th>Categoria</th>
+              <th>Qtd. Atual</th>
+              <th>Mínimo</th>
+              <th>Status</th>
+              <th>Atualizado em</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-corpo"></tbody>
+        </table>
+        <p id="estado-vazio" class="estado-vazio oculto">
+          Nenhum item encontrado. Cadastre um material acima ou clique em "Carregar exemplos".
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p>Os dados ficam salvos localmente no seu navegador (LocalStorage).</p>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/exportCsv.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
